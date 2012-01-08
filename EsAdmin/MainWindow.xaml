@@ -1,0 +1,98 @@
+﻿<Window x:Class="EsAdmin.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
+        xmlns:EsAdmin="clr-namespace:EsAdmin" TextOptions.TextFormattingMode="Display"
+        Title="Elastic Search REST console" Height="500" Width="700">
+    <DockPanel>
+        <ToolBar DockPanel.Dock="Top">
+            <ToolBar.Resources>
+                <Style TargetType="{x:Type Image}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type ButtonBase}, AncestorLevel=1}, Path=IsEnabled}" Value="False">
+                            <Setter Property="Opacity" Value="0.30" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ToolBar.Resources>
+            <Button Click="OpenFileClick">
+                <Image Source="Images/Open.png" Height="16"/>
+            </Button>
+            <Button Click="SaveFileClick">
+                <Image Source="Images/Save.png" Height="16"/>
+            </Button>
+            <Separator/>
+            <Button Command="Cut">
+                <Image Source="Images/Cut.png" Height="16"/>
+            </Button>
+            <Button Command="Copy">
+                <Image Source="Images/Copy.png" Height="16"/>
+            </Button>
+            <Button Command="Paste">
+                <Image Source="Images/Paste.png" Height="16"/>
+            </Button>
+            <Button Command="Delete">
+                <Image Source="Images/Delete.png" Height="16"/>
+            </Button>
+            <Separator/>
+            <Button Command="Undo">
+                <Image Source="Images/Undo.png" Height="16"/>
+            </Button>
+            <Button Command="Redo">
+                <Image Source="Images/Redo.png" Height="16"/>
+            </Button>
+            <Separator/>
+            <CheckBox IsChecked="{Binding ElementName=textEditor,Path=WordWrap}">
+                <Image Source="Images/WordWrap.png" Height="16"/>
+            </CheckBox>
+            <CheckBox IsChecked="{Binding ElementName=textEditor,Path=ShowLineNumbers}">
+                <TextBlock Width="16" TextAlignment="Center">#</TextBlock>
+            </CheckBox>
+            <CheckBox IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type EsAdmin:MainWindow}}, Path=ShowSpacesAndEol}">
+                <TextBlock Width="16" TextAlignment="Center">¶</TextBlock>
+            </CheckBox>
+            <Separator/>
+            <Button Command="EsAdmin:UiCommands.Execute">
+                <Image Source="Images/Execute.png" Height="16"/>
+            </Button>
+            <Separator/>
+            <TextBox Name="Host" Width="150">localhost</TextBox>
+            <TextBlock FontSize="14">:</TextBlock>
+            <TextBox Name="Port" Width="50">9200</TextBox>
+            <TextBlock FontSize="14"> // </TextBlock>
+            <TextBox Name="Index" Width="130"></TextBox>
+
+        </ToolBar>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="200"/>
+            </Grid.RowDefinitions>
+            <avalonEdit:TextEditor
+                Name="textEditor"
+                FontFamily="Consolas"
+                FontSize="10pt"
+                SyntaxHighlighting="C#"
+            >
+            </avalonEdit:TextEditor>
+
+            <GridSplitter Grid.Row="1" Grid.ColumnSpan="4" Height="4" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
+            <DockPanel Grid.Row="1" Margin="4 4 0 0">
+                <ToolBar DockPanel.Dock="Top">
+                    <Button Click="ClearOutputClick">
+                        <Image Source="Images/Delete.png" Height="16"/>
+                    </Button>
+                </ToolBar>
+                <avalonEdit:TextEditor
+                Name="output"
+                FontFamily="Consolas"
+                FontSize="10pt"
+                SyntaxHighlighting="C#"
+                Background="LightGoldenrodYellow"
+                />
+            </DockPanel>
+
+            
+        </Grid>
+    </DockPanel>
+</Window>
