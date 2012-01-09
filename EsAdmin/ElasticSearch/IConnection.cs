@@ -6,12 +6,12 @@ namespace EsAdmin.ElasticSearch
     {
         ConnectionStatus Connect();
        
-        ConnectionStatus GetSync(string path);
+        ConnectionStatus Get(string path);
        
-        ConnectionStatus PostSync(string path, string data);
+        ConnectionStatus Post(string path, string data);
 
-        ConnectionStatus PutSync(string path, string data);
-        ConnectionStatus DeleteSync(string path);
-        ConnectionStatus DeleteSync(string path, string data);
+        ConnectionStatus Put(string path, string data);
+        ConnectionStatus Delete(string path);
+        ConnectionStatus Delete(string path, string data);
     }
 }

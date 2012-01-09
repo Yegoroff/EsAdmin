@@ -18,10 +18,10 @@ namespace EsAdmin.ElasticSearch
 
         public ConnectionStatus Connect()
         {
-            return GetSync("");
+            return Get("");
         }            
 
-        public ConnectionStatus GetSync(string path)
+        public ConnectionStatus Get(string path)
         {
             var connection = this.CreateConnection(path, "GET");
             connection.Timeout = this.ConnectionSettings.TimeOut;
@@ -54,11 +54,11 @@ namespace EsAdmin.ElasticSearch
         }
 
 
-        public ConnectionStatus PostSync(string path, string data)
+        public ConnectionStatus Post(string path, string data)
         {
             return this.PostOrPutSync(path, data, "POST");
         }
-        public ConnectionStatus PutSync(string path, string data)
+        public ConnectionStatus Put(string path, string data)
         {
             return this.PostOrPutSync(path, data, "PUT");
         }
@@ -104,7 +104,7 @@ namespace EsAdmin.ElasticSearch
                     response.Close();
             }
         }
-        public ConnectionStatus DeleteSync(string path)
+        public ConnectionStatus Delete(string path)
         {
             var connection = this.CreateConnection(path, "DELETE");
             connection.Timeout = this.ConnectionSettings.TimeOut;
@@ -136,7 +136,7 @@ namespace EsAdmin.ElasticSearch
                     response.Close();
             }
         }
-        public ConnectionStatus DeleteSync(string path, string data)
+        public ConnectionStatus Delete(string path, string data)
         {
             var connection = this.CreateConnection(path, "DELETE");
             connection.Timeout = this.ConnectionSettings.TimeOut;

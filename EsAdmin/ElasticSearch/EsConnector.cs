@@ -46,7 +46,7 @@ namespace EsAdmin
                 }
             */
 
-            textToExecute = textToExecute.Trim(' ', '\r', '\n');
+            textToExecute = textToExecute.Trim(' ', '\r', '\n', '\t');
 
             var splittedText = textToExecute.Trim(' ', '\r', '\n').Split(new[] { " ", "\r\n", "\t" }, StringSplitOptions.RemoveEmptyEntries);
             string action = splittedText[0];
@@ -62,18 +62,18 @@ namespace EsAdmin
             {
                 case "GET":
                     if (string.IsNullOrWhiteSpace(body))
-                        status = Connection.GetSync(path);
+                        status = Connection.Get(path);
                     else
-                        status = Connection.PostSync(path, body);
+                        status = Connection.Post(path, body);
                     break;
                 case "POST":
-                    status = Connection.PostSync(path, body);
+                    status = Connection.Post(path, body);
                     break;
                 case "PUT":
-                    status = Connection.PutSync(path, body);
+                    status = Connection.Put(path, body);
                     break;
                 case "DELETE":
-                    status = Connection.DeleteSync(path, body);
+                    status = Connection.Delete(path, body);
                     break;
                 default:
                     throw new ArgumentException("Invalid Action {0} detected".F(action),
