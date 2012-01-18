@@ -1,23 +1,16 @@
 ﻿using System;
-using EsAdmin.ElasticSearch;
-using EsAdmin.Utils;
+using PlainElastic.Net;
+using StringExtensions = EsAdmin.Utils.StringExtensions;
 
 namespace EsAdmin
 {
     class EsConnector : IDisposable
     {
-        public IConnection Connection { get; private set; }
+        public IElasticConnection Connection { get; private set; }
 
-        public EsConnector(string host, int port, string index)
+        public EsConnector(string host, int port)
         {
-            var settings = new ConnectionSettings(host, port)
-                .UsePrettyResponses(true)
-                .SetDefaultIndex(index);
-
-            Connection = new Connection(settings);
-
-            if (!Connection.Connect().Success)
-                throw new InvalidOperationException("No Elastic Search connection esatblished");
+            Connection = new ElasticConnection{DefaultHost = host, DefaultPort = port};
         }
 
 
@@ -48,42 +41,44 @@ namespace EsAdmin
 
             textToExecute = textToExecute.Trim(' ', '\r', '\n', '\t');
 
-            var splittedText = textToExecute.Trim(' ', '\r', '\n').Split(new[] { " ", "\r\n", "\t" }, StringSplitOptions.RemoveEmptyEntries);
+            var splittedText = textToExecute.Trim(' ', '\r', '\n').Split(new[] {" ", "\r\n", "\t"},
+                                                                         StringSplitOptions.RemoveEmptyEntries);
             string action = splittedText[0];
             string path = splittedText[1];
             int endOfFirstLine = textToExecute.IndexOf("\r\n");
             string body = "";
             if (endOfFirstLine > 0)
-                body = textToExecute.Remove(0, endOfFirstLine + 2);            
-                
-            ConnectionStatus status = null;
+                body = textToExecute.Remove(0, endOfFirstLine + 2);
 
-            switch (action.ToUpper())
+            try
             {
-                case "GET":
-                    if (string.IsNullOrWhiteSpace(body))
-                        status = Connection.Get(path);
-                    else
-                        status = Connection.Post(path, body);
-                    break;
-                case "POST":
-                    status = Connection.Post(path, body);
-                    break;
-                case "PUT":
-                    status = Connection.Put(path, body);
-                    break;
-                case "DELETE":
-                    status = Connection.Delete(path, body);
-                    break;
-                default:
-                    throw new ArgumentException("Invalid Action {0} detected".F(action),
-                        "textToExecute");
+                switch (action.ToUpper())
+                {
+                    case "GET":
+                        if (string.IsNullOrWhiteSpace(body))
+                            return Connection.Get(path);
+
+                        return Connection.Post(path, body);
+
+                    case "POST":
+                        return Connection.Post(path, body);
+
+                    case "PUT":
+                        return Connection.Put(path, body);
+
+                    case "DELETE":
+                        return Connection.Delete(path, body);
+
+                    default:
+                        throw new ArgumentException(StringExtensions.F("Invalid Action {0} detected", action),
+                                                    "textToExecute");
+                }
+
             }
-
-            if (!status.Success)
-                return status.Error.ExceptionMessage;
-
-            return status.Result;
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
     }
 }

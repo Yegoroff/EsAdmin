@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Text;
 
 namespace EsAdmin.Utils
 {
     class JsonBeautifier
     {
-
         private const int IndentCount = 4;
 
         public static string Beautify(string str)
@@ -30,6 +26,7 @@ namespace EsAdmin.Utils
                             sb.Append(' ', IndentCount * indent);
                         }
                         break;
+                    
                     case '}':
                     case ']':
                         if (!quoted)
@@ -40,6 +37,7 @@ namespace EsAdmin.Utils
                         }
                         sb.Append(ch);
                         break;
+
                     case '"':
                         sb.Append(ch);
                         
@@ -52,6 +50,7 @@ namespace EsAdmin.Utils
                             quoted = !quoted;
 
                         break;
+
                     case ',':
                         sb.Append(ch);
                         if (!quoted)
@@ -60,6 +59,7 @@ namespace EsAdmin.Utils
                             sb.Append(' ', IndentCount * indent);
                         }
                         break;
+
                     case ':':
                         sb.Append(ch);
                         if (!quoted)
@@ -83,15 +83,4 @@ namespace EsAdmin.Utils
             return sb.ToString(); ;
         }
     }
-
-    //static class Extensions
-    //{
-    //    public static void ForEach<T>(this IEnumerable<T> ie, Action<T> action)
-    //    {
-    //        foreach (var i in ie)
-    //        {
-    //            action(i);
-    //        }
-    //    }
-    //}
 }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace EsAdmin.Utils
+﻿namespace EsAdmin.Utils
 {
     public static class StringExtensions
     {

@@ -108,11 +108,10 @@ namespace EsAdmin
 
                 var host = Host.Text;
                 int port = int.Parse(Port.Text);
-                var defaultIndex = Index.Text;
-                using (var connector = new EsConnector(host, port, defaultIndex))
+                using (var connector = new EsConnector(host, port))
                 {
                     string result = connector.Execute(textToExecute);
-                    output.Text = result;
+                    output.Text = JsonBeautifier.Beautify(result);
                 }
             }
             catch (Exception ex)

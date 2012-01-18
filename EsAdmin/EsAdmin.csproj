@@ -44,6 +44,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>packages\AvalonEdit.4.1.0.8000\lib\Net40\ICSharpCode.AvalonEdit.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>packages\Newtonsoft.Json.4.0.5\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PlainElastic.Net">
+      <HintPath>packages\PlainElastic.Net.1.0.0\lib\Net40\PlainElastic.Net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -76,15 +82,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="UI\BraceFoldingStrategy.cs" />
-    <Compile Include="ElasticSearch\Connection.cs" />
-    <Compile Include="ElasticSearch\ConnectionError.cs" />
-    <Compile Include="ElasticSearch\ConnectionSettings.cs" />
-    <Compile Include="ElasticSearch\ConnectionState.cs" />
-    <Compile Include="ElasticSearch\ConnectionStatus.cs" />
-    <Compile Include="ElasticSearch\IConnectionSettings.cs" />
     <Compile Include="UI\UiCommands.cs" />
     <Compile Include="ElasticSearch\EsConnector.cs" />
-    <Compile Include="ElasticSearch\IConnection.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
