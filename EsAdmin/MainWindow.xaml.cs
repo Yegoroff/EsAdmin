@@ -2,9 +2,9 @@
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
-using EsAdmin.Utils;
 using ICSharpCode.AvalonEdit.Folding;
 using Microsoft.Win32;
+using PlainElastic.Net;
 
 namespace EsAdmin
 {
@@ -108,12 +108,10 @@ namespace EsAdmin
 
                 var host = Host.Text;
                 int port = int.Parse(Port.Text);
-                var defaultIndex = Index.Text;
-                using (var connector = new EsConnector(host, port, defaultIndex))
-                {
-                    string result = connector.Execute(textToExecute);
-                    output.Text = result;
-                }
+
+                var connector = new EsConnector(host, port);
+                string result = connector.Execute(textToExecute);
+                output.Text = result.ButifyJson();               
             }
             catch (Exception ex)
             {

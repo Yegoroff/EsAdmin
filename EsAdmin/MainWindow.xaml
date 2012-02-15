@@ -15,6 +15,7 @@
                     </Style.Triggers>
                 </Style>
             </ToolBar.Resources>
+            
             <Button Click="OpenFileClick">
                 <Image Source="Images/Open.png" Height="16"/>
             </Button>
@@ -59,9 +60,6 @@
             <TextBox Name="Host" Width="150">localhost</TextBox>
             <TextBlock FontSize="14">:</TextBlock>
             <TextBox Name="Port" Width="50">9200</TextBox>
-            <TextBlock FontSize="14"> // </TextBlock>
-            <TextBox Name="Index" Width="130"></TextBox>
-
         </ToolBar>
         <Grid>
             <Grid.RowDefinitions>

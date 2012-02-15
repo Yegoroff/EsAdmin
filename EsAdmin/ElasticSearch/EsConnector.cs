@@ -1,89 +1,53 @@
 ﻿using System;
-using EsAdmin.ElasticSearch;
-using EsAdmin.Utils;
+using PlainElastic.Net;
 
 namespace EsAdmin
 {
-    class EsConnector : IDisposable
+    class EsConnector
     {
-        public IConnection Connection { get; private set; }
+        public ElasticConnection Connection { get; private set; }
 
-        public EsConnector(string host, int port, string index)
+        public EsConnector(string host, int port)
         {
-            var settings = new ConnectionSettings(host, port)
-                .UsePrettyResponses(true)
-                .SetDefaultIndex(index);
-
-            Connection = new Connection(settings);
-
-            if (!Connection.Connect().Success)
-                throw new InvalidOperationException("No Elastic Search connection esatblished");
+            Connection = new ElasticConnection(host, port);
         }
 
-
-        #region Implementation of IDisposable
-
-        public void Dispose()
-        {
-            // nothing to dispose yet.
-        }
-
-        #endregion
 
         public string Execute(string textToExecute)
         {
-            /*            
-             GET /companies/icompanies/_mapping
-             {
-                  "icompanies": {
-                    "properties": {
-                      "businessDetails.industry": {
-                        "type": "string",
-                        "index": "not_analyzed"
-                      }
-                    }
-                  }
-                }
-            */
-
             textToExecute = textToExecute.Trim(' ', '\r', '\n', '\t');
 
             var splittedText = textToExecute.Trim(' ', '\r', '\n').Split(new[] { " ", "\r\n", "\t" }, StringSplitOptions.RemoveEmptyEntries);
             string action = splittedText[0];
             string path = splittedText[1];
+            path = UrlBuilder.AddParameter(path, "pretty", "true");
+
             int endOfFirstLine = textToExecute.IndexOf("\r\n");
             string body = "";
             if (endOfFirstLine > 0)
                 body = textToExecute.Remove(0, endOfFirstLine + 2);            
-                
-            ConnectionStatus status = null;
 
             switch (action.ToUpper())
             {
                 case "GET":
                     if (string.IsNullOrWhiteSpace(body))
-                        status = Connection.Get(path);
-                    else
-                        status = Connection.Post(path, body);
-                    break;
+                        return Connection.Get(path);
+                    return Connection.Post(path, body);
+
                 case "POST":
-                    status = Connection.Post(path, body);
-                    break;
+                    return Connection.Post(path, body);
+
                 case "PUT":
-                    status = Connection.Put(path, body);
-                    break;
+                    return Connection.Put(path, body);
+
                 case "DELETE":
-                    status = Connection.Delete(path, body);
-                    break;
+                    return Connection.Delete(path, body);
+
                 default:
-                    throw new ArgumentException("Invalid Action {0} detected".F(action),
-                        "textToExecute");
+                    throw new ArgumentException("Invalid Action {0} detected".F(action),"textToExecute");
             }
 
-            if (!status.Success)
-                return status.Error.ExceptionMessage;
 
-            return status.Result;
         }
     }
 }
