@@ -128,7 +128,9 @@
     <Resource Include="Images\Execute.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ES.ico" />
+    <Content Include="ES.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
