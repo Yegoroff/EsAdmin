@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Net;
 using PlainElastic.Net;
+using PlainElastic.Net.Utils;
 
 namespace EsAdmin
 {
@@ -7,9 +9,12 @@ namespace EsAdmin
     {
         public ElasticConnection Connection { get; private set; }
 
-        public EsConnector(string host, int port)
+        public EsConnector(string host, int port, string login, string password)
         {
-            Connection = new ElasticConnection(host, port);
+            var credentials = !login.IsNullOrEmpty() && !password.IsNullOrEmpty()
+                                ? new NetworkCredential(login, password)
+                                : null;
+            Connection = new ElasticConnection(host, port) { Credentials = credentials };
         }
 
 
