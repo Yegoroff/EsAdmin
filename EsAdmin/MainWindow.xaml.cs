@@ -5,6 +5,7 @@ using System.Windows.Threading;
 using ICSharpCode.AvalonEdit.Folding;
 using Microsoft.Win32;
 using PlainElastic.Net;
+using PlainElastic.Net.Utils;
 
 namespace EsAdmin
 {
@@ -106,12 +107,14 @@ namespace EsAdmin
                 if (string.IsNullOrEmpty(textToExecute))
                     textToExecute = textEditor.Text;
 
+                var login = Login.Text;
+                var password = Password.Text;
                 var host = Host.Text;
                 int port = int.Parse(Port.Text);
 
-                var connector = new EsConnector(host, port);
+                var connector = new EsConnector(host, port, login, password);
                 string result = connector.Execute(textToExecute);
-                output.Text = result.ButifyJson();               
+                output.Text = result.BeautifyJson();
             }
             catch (Exception ex)
             {
