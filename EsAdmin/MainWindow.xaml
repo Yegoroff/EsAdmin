@@ -58,13 +58,13 @@
                 <Image Source="Images/Execute.png" Height="16"/>
             </Button>
             <Separator/>
-            <TextBox Name="Login" Width="60"></TextBox>
+            <TextBox Name="Login" Width="60" ToolTip="Username"></TextBox>
             <TextBlock FontSize="14">:</TextBlock>
-            <TextBox Name="Password" Width="60"></TextBox>
+            <TextBox Name="Password" Width="60" ToolTip="Password"></TextBox>
             <TextBlock FontSize="14">@</TextBlock>
-            <TextBox Name="Host" Width="120">localhost</TextBox>
+            <TextBox Name="Host" Width="120" ToolTip="Host">localhost</TextBox>
             <TextBlock FontSize="14">:</TextBlock>
-            <TextBox Name="Port" Width="50">9200</TextBox>
+            <TextBox Name="Port" Width="50" ToolTip="Port">9200</TextBox>
         </ToolBar>
         <Grid>
             <Grid.RowDefinitions>
