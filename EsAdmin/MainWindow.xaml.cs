@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
@@ -11,6 +12,9 @@ namespace EsAdmin
 {
     public partial class MainWindow : Window
     {
+        private const string lastTextFileName = "lasttext.txt";
+        private const string lastOpenedFileName = "lastopened.txt";
+        
         private string currentFileName;
         private FoldingManager textfoldingManager;
         private FoldingManager outputfoldingManager;
@@ -27,6 +31,10 @@ namespace EsAdmin
             SetupFolding();
 
             ShowSpacesAndEol = false;
+
+            SetupStateTracking();
+
+            RestoreLastState();
         }
 
 
@@ -42,34 +50,112 @@ namespace EsAdmin
 
 
 
-        private void OpenFileClick(object sender, RoutedEventArgs e)
+
+        private void SetupStateTracking()
+        {
+            textEditor.TextChanged += StoreTextChanges;
+        }
+
+        private void StoreTextChanges(object sender, EventArgs e)
+        {
+            File.WriteAllText(lastTextFileName, textEditor.Text);
+        }
+
+        private bool LoadFile(string fileName)
+        {
+            if (File.Exists(fileName))
+            {
+                textEditor.Load(fileName);
+                return true;
+            }
+            return false;
+        }
+
+        private void SetCurrentFileName(string fileName)
+        {
+            currentFileName = fileName;
+            File.WriteAllText(lastOpenedFileName, fileName);
+        }
+
+        private void RestoreLastState()
+        {
+            if (File.Exists(lastOpenedFileName))
+            {
+                var lastOpenedFile = File.ReadAllText(lastOpenedFileName);
+                if (LoadFile(lastOpenedFile))
+                    return;
+            }
+
+            if (!File.Exists(lastTextFileName))
+                return;
+
+            var lastText = File.ReadAllText(lastTextFileName);
+            textEditor.Text = lastText;
+        }
+
+
+
+        private void SetupHotkeysAndCommands()
+        {
+            BindKeysAndHandler(UiCommands.Execute, new KeyGesture(Key.F5), ExecuteHandler);
+
+            BindKeysAndHandler(UiCommands.BeautifyJson, new KeyGesture(Key.B, ModifierKeys.Control), BeautifyJsonHandler);
+
+            BindKeysAndHandler(UiCommands.SaveFile, new KeyGesture(Key.S, ModifierKeys.Control), SaveFileHandler);
+
+            BindKeysAndHandler(UiCommands.OpenFile, new KeyGesture(Key.O, ModifierKeys.Control), OpenFileHandler);
+
+            BindKeysAndHandler(UiCommands.NewFile, new KeyGesture(Key.N, ModifierKeys.Control), NewFileHandler);
+
+            BindKeysAndHandler(ApplicationCommands.SelectAll, new KeyGesture(Key.A, ModifierKeys.Control), null);
+
+        }
+
+        private void BindKeysAndHandler(ICommand command, KeyGesture keyGesture, ExecutedRoutedEventHandler handler)
+        {
+            var ib = new InputBinding(command, keyGesture);
+            InputBindings.Add(ib);
+
+            if (handler == null)
+                return;
+
+            var cb = new CommandBinding(command);
+            cb.Executed += handler;
+            CommandBindings.Add(cb);
+        }
+
+
+        private void NewFileHandler(object sender, RoutedEventArgs e)
+        {
+            SetCurrentFileName("");
+            textEditor.Clear();
+        }
+
+        private void OpenFileHandler(object sender, RoutedEventArgs e)
         {
             var dlg = new OpenFileDialog();
             dlg.CheckFileExists = true;
-            if ((bool) dlg.ShowDialog())
+            if (dlg.ShowDialog() == true)
             {
-                currentFileName = dlg.FileName;
-                textEditor.Load(currentFileName);                
+                if (LoadFile(dlg.FileName))
+                {
+                    SetCurrentFileName(dlg.FileName);
+                }
             }
         }
 
-        private void SaveFileClick(object sender, EventArgs e)
+        private void SaveFileHandler(object sender, EventArgs e)
         {
-            if (currentFileName == null)
+            if (currentFileName.IsNullOrEmpty())
             {
-                var dlg = new SaveFileDialog {DefaultExt = ".txt"};
-                if (!((bool) dlg.ShowDialog()))
+                var dlg = new SaveFileDialog { DefaultExt = ".txt" };
+                if (!((bool)dlg.ShowDialog()))
                     return;
 
-                currentFileName = dlg.FileName;
-
+                SetCurrentFileName(dlg.FileName);
             }
             textEditor.Save(currentFileName);
         }
-
-
-
-
 
         private void BeautifyJsonHandler(object sender, EventArgs e)
         {
@@ -97,8 +183,6 @@ namespace EsAdmin
             }
         }
 
-
-
         private void ExecuteHandler(object sender, EventArgs e)
         {
             try
@@ -125,25 +209,6 @@ namespace EsAdmin
         private void ClearOutputClick(object sender, RoutedEventArgs e)
         {
             output.Clear();
-        }
-
-
-        private void SetupHotkeysAndCommands()
-        {
-            var ib = new InputBinding(UiCommands.Execute, new KeyGesture(Key.F5));
-            InputBindings.Add(ib);
-
-            ib = new InputBinding(UiCommands.BeautifyJson, new KeyGesture(Key.B, ModifierKeys.Control));
-            InputBindings.Add(ib);
-
-            // Bind handler
-            var cb = new CommandBinding(UiCommands.Execute);
-            cb.Executed += ExecuteHandler;
-            CommandBindings.Add(cb);
-
-            cb = new CommandBinding(UiCommands.BeautifyJson);
-            cb.Executed += BeautifyJsonHandler;
-            CommandBindings.Add(cb);
         }
 
 

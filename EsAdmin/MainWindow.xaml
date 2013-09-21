@@ -16,11 +16,15 @@
                     </Style.Triggers>
                 </Style>
             </ToolBar.Resources>
-            
-            <Button Click="OpenFileClick">
+
+
+            <Button Command="EsAdmin:UiCommands.NewFile">
+                <Image Source="Images/New.png" Height="16"/>
+            </Button>
+            <Button Command="EsAdmin:UiCommands.OpenFile">
                 <Image Source="Images/Open.png" Height="16"/>
             </Button>
-            <Button Click="SaveFileClick">
+            <Button Command="EsAdmin:UiCommands.SaveFile">
                 <Image Source="Images/Save.png" Height="16"/>
             </Button>
             <Separator/>
