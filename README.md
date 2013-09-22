@@ -3,19 +3,23 @@ EsAdmin
 
 Simple ElasticSearch administrative console
 
-[Manual :)](http://screencast.com/t/nZCgvbIT)
+![Manual](http://content.screencast.com/users/AlexYegoroff/folders/Jing/media/3a87afc9-c4a0-48ca-ae1a-64dc93452492/EsAdmin.png)
+
+**Note:** *EsAdmin persists it's last state accross runs.*
 
 
 ### Advanced Usage
   
-  Press *Ctrl+B* to auto format all JSON in top editor. <br/>
-  You can limit autoformating by selecting JSON you want to format.
+  Press `Ctrl + "-"` to fold all JSON regions. <br/>
   
+  Press `Ctrl + F` to open search panel.<br/>
+  
+  Press `Ctrl + B` to auto format all JSON in top editor. <br/>
+  You can limit autoformating by selecting JSON you want to format.
   
   You can edit/debug multiple ES queries at time.<br/>
   Put all your queries in the editor, then select one that you want to execute and press F5.<br/>
-  [See how](http://screencast.com/t/tgEm1Uw8)
-
+![Advanced Usage](http://content.screencast.com/users/AlexYegoroff/folders/Jing/media/0cba4ae6-7b39-4cc9-980b-e416d427a046/EsAdmin%20Several%20ES%20Queries.png)
 
 ### License
 
