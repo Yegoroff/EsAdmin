@@ -3,7 +3,7 @@ EsAdmin
 
 Simple ElasticSearch administrative console
 
-![Manual](http://content.screencast.com/users/AlexYegoroff/folders/Jing/media/3a87afc9-c4a0-48ca-ae1a-64dc93452492/EsAdmin.png)
+![Manual](http://content.screencast.com/users/AlexYegoroff/folders/Jing/media/3ab884f2-9f2d-4ccc-8245-79c31746cfab/ES%20Admin%20How%20To%20instruton.png)
 
 **Note:** *EsAdmin persists it's last state accross runs.*
 
