@@ -1,7 +1,9 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Resources;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
 using System.Xml;
@@ -18,7 +20,7 @@ namespace EsAdmin
     public partial class MainWindow : Window
     {
         private const string lastTextFileName = "lasttext.txt";
-        private const string lastOpenedFileName = "lastopened.txt";
+        private const string lastStateFileName = "laststate.txt";
         
         private string currentFileName;
         private FoldingManager textfoldingManager;
@@ -61,7 +63,12 @@ namespace EsAdmin
         private void SetupStateTracking()
         {
             textEditor.TextChanged += StoreTextChanges;
+            Login.TextChanged += UpdateLastStateHandler;
+            Host.TextChanged += UpdateLastStateHandler;
+            Port.TextChanged += UpdateLastStateHandler;
         }
+
+ 
 
         private void StoreTextChanges(object sender, EventArgs e)
         {
@@ -81,16 +88,52 @@ namespace EsAdmin
         private void SetCurrentFileName(string fileName)
         {
             currentFileName = fileName;
-            File.WriteAllText(lastOpenedFileName, fileName);
+            Title = "EsAdmin - " + fileName;
+            UpdateLastState();
+        }
+
+
+        private void UpdateLastStateHandler(object sender, TextChangedEventArgs e)
+        {
+            UpdateLastState();
+        }
+
+        private void UpdateLastState()
+        {
+            var login = Login.Text;
+            var host = Host.Text;
+            var port = Port.Text;
+
+            string lastState = "openedFileName|" + currentFileName + "\r\n" +
+                               "login|" + login +"\r\n" +
+                               "host|" + host + "\r\n" +
+                               "port|" + port + "\r\n";
+
+            File.WriteAllText(lastStateFileName,  lastState);
         }
 
         private void RestoreLastState()
         {
-            if (File.Exists(lastOpenedFileName))
+            if (File.Exists(lastStateFileName))
             {
-                var lastOpenedFile = File.ReadAllText(lastOpenedFileName);
-                if (LoadFile(lastOpenedFile))
+                string[] lastState = File.ReadAllLines(lastStateFileName);
+                var settings = lastState.Select(line => line.Split('|')).ToDictionary(s => s[0], s => s[1]);
+
+                string openedFileName, login, host, port;
+                settings.TryGetValue("openedFileName",out openedFileName);
+                settings.TryGetValue("login", out login);
+                settings.TryGetValue("host", out host);
+                settings.TryGetValue("port", out port);
+
+                Host.Text = host.IsNullOrEmpty() ? "localhost" : host; 
+                Port.Text = port.IsNullOrEmpty() ? "9200" : port;
+                Login.Text = login;
+
+                if (LoadFile(openedFileName))
+                {   
+                    SetCurrentFileName(openedFileName);
                     return;
+                }
             }
 
             if (!File.Exists(lastTextFileName))
