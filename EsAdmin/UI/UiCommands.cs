@@ -13,5 +13,7 @@ namespace EsAdmin
         public static ICommand OpenFile = new RoutedCommand();
 
         public static ICommand NewFile = new RoutedCommand();
+
+        public static ICommand FoldAll = new RoutedCommand();
     }
 }

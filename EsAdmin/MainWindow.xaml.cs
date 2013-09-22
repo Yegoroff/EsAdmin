@@ -1,9 +1,14 @@
 ﻿using System;
 using System.IO;
+using System.Resources;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
+using System.Xml;
 using ICSharpCode.AvalonEdit.Folding;
+using ICSharpCode.AvalonEdit.Highlighting;
+using ICSharpCode.AvalonEdit.Highlighting.Xshd;
+using ICSharpCode.AvalonEdit.Search;
 using Microsoft.Win32;
 using PlainElastic.Net;
 using PlainElastic.Net.Utils;
@@ -29,6 +34,8 @@ namespace EsAdmin
             SetupHotkeysAndCommands();
 
             SetupFolding();
+
+            SetupHighlighting();
 
             ShowSpacesAndEol = false;
 
@@ -107,8 +114,11 @@ namespace EsAdmin
 
             BindKeysAndHandler(UiCommands.NewFile, new KeyGesture(Key.N, ModifierKeys.Control), NewFileHandler);
 
-            BindKeysAndHandler(ApplicationCommands.SelectAll, new KeyGesture(Key.A, ModifierKeys.Control), null);
+            BindKeysAndHandler(UiCommands.FoldAll, new KeyGesture(Key.OemMinus, ModifierKeys.Control), FoldAllHandler);
 
+            BindKeysAndHandler(ApplicationCommands.Find, new KeyGesture(Key.F, ModifierKeys.Control), SearchHandler);
+
+            BindKeysAndHandler(ApplicationCommands.SelectAll, new KeyGesture(Key.A, ModifierKeys.Control), null);
         }
 
         private void BindKeysAndHandler(ICommand command, KeyGesture keyGesture, ExecutedRoutedEventHandler handler)
@@ -124,6 +134,21 @@ namespace EsAdmin
             CommandBindings.Add(cb);
         }
 
+
+        private void SearchHandler(object sender, ExecutedRoutedEventArgs e)
+        {
+            var sp = new SearchPanel();
+            sp.Attach(textEditor.TextArea);
+            sp.Dispatcher.BeginInvoke(DispatcherPriority.Input, (Action)sp.Reactivate);
+        }
+
+        private void FoldAllHandler(object sender, ExecutedRoutedEventArgs e)
+        {
+            foreach (FoldingSection fm in textfoldingManager.AllFoldings)
+            {
+                fm.IsFolded = true;
+            }
+        }
 
         private void NewFileHandler(object sender, RoutedEventArgs e)
         {
@@ -210,6 +235,21 @@ namespace EsAdmin
         {
             output.Clear();
         }
+
+
+        private void SetupHighlighting()
+        {
+            using (var highlightingData = new StringReader(Properties.Resources.ESHighlighting))
+            {
+                using (var reader = new XmlTextReader(highlightingData))
+                {
+                    IHighlightingDefinition highlightingDefinition = HighlightingLoader.Load(reader, HighlightingManager.Instance);
+                    textEditor.SyntaxHighlighting = highlightingDefinition;
+                    output.SyntaxHighlighting = highlightingDefinition;
+                }
+            }
+        }
+
 
 
         #region Folding

@@ -120,6 +120,7 @@
     <Resource Include="Images\Execute.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ESHighlighting.xshd" />
     <Content Include="ES.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

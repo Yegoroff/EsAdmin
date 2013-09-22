@@ -1,0 +1,367 @@
+﻿<?xml version="1.0"?>
+<SyntaxDefinition name="EsAdmin" extensions=".esq" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
+
+    <Color name="HttpVerb" foreground="#008080" fontWeight="bold" exampleText="POST" />
+
+    <Color name="EsCommand" foreground="Black" fontWeight="bold" exampleText="POST" />
+    <Color name="EsKeyword" foreground="Blue" exampleText="&quot;term&quot;" />
+    
+    <Color name="Literal" foreground="DarkBlue" exampleText="bools" />  
+  
+    <Color name="Digits" foreground="DarkBlue" exampleText="3.14" />
+	<Color name="Comment" foreground="Green" exampleText="// comment" />
+
+    <Color name="String" foreground="Sienna" exampleText="&quot;Hello, World!&quot;" />
+  
+
+    <RuleSet ignoreCase="false">
+	
+        <Keywords color="HttpVerb">
+			<Word>GET</Word>
+			<Word>PUT</Word>
+			<Word>POST</Word>
+			<Word>DELETE</Word>
+			<Word>HEAD</Word>
+
+            <Word>get</Word>
+            <Word>put</Word>
+            <Word>post</Word>
+            <Word>delete</Word>
+            <Word>head</Word>
+        </Keywords>
+    
+   
+        <Keywords color="EsCommand">
+            <Word>_aliases</Word>
+            <Word>_analyze</Word>
+            <Word>_bulk</Word>
+            <Word>_cache</Word>
+            <Word>_close</Word>
+            <Word>_cluster</Word>
+            <Word>_count</Word>
+            <Word>_explain</Word>
+            <Word>_flush</Word>
+            <Word>_gateway</Word>
+            <Word>_mapping</Word>
+            <Word>_mget</Word>
+            <Word>_mlt</Word>
+            <Word>_nodes</Word>
+            <Word>_open</Word>
+            <Word>_optimize</Word>
+            <Word>_percolator</Word>
+            <Word>_query</Word>
+            <Word>_refresh</Word>
+            <Word>_search</Word>
+            <Word>_segments</Word>
+            <Word>_settings</Word>
+            <Word>_stats</Word>
+            <Word>_status</Word>
+            <Word>_template</Word>
+            <Word>_update</Word>
+            <Word>_validate</Word>
+        </Keywords>
+        
+		<Keywords color="Literal">
+			<Word>false</Word>
+			<Word>null</Word>
+			<Word>true</Word>
+			<Word>NaN</Word>
+		</Keywords>
+
+
+        <Span color="String" multiline="false">
+			<Begin>"</Begin>
+			<End>"</End>
+            <RuleSet ignoreCase="false">
+                <Span begin="\\" end="." />
+
+                <Keywords color="EsKeyword">
+                    <Word>analysis</Word>
+                    <Word>analyzer</Word>
+                    <Word>type</Word>
+                    <Word>tokenizer</Word>
+                    <Word>filter</Word>
+                    <Word>char_filter</Word>
+                    <Word>tokenizer</Word>
+
+                    
+                    <Word>dynamic</Word>
+                    <Word>_all</Word>
+                    <Word>_nested</Word>
+                    <Word>_parent</Word>
+                    <Word>properties</Word>
+                    <Word>boost</Word>
+                    <Word>fields</Word>
+                    <Word>path</Word>
+                    <Word>format</Word>
+                    <Word>enabled</Word>
+
+                    <Word>_uid</Word>
+                    <Word>_id</Word>
+                    <Word>_type</Word>
+                    <Word>_source</Word>
+                    <Word>_analyzer</Word>
+                    <Word>_boost</Word>
+                    <Word>_routing</Word>
+                    <Word>_index</Word>
+                    <Word>_size</Word>
+                    <Word>_timestamp</Word>
+                    <Word>_ttl</Word>
+
+                    <Word>from</Word>
+                    <Word>size</Word>
+                    <Word>sort</Word>
+                    <Word>order</Word>
+
+                    <Word>query</Word>
+
+                    <Word>match</Word>
+                    <Word>multi_match</Word>
+                    <Word>bool</Word>
+                    <Word>boosting</Word>
+                    <Word>ids</Word>
+                    <Word>custom_score</Word>
+                    <Word>custom_boost_factor</Word>
+                    <Word>function_score</Word>
+                    <Word>constant_score</Word>
+                    <Word>dis_max</Word>
+                    <Word>field</Word>
+                    <Word>filtered</Word>
+                    <Word>flt</Word>
+                    <Word>flt_field</Word>
+                    <Word>fuzzy</Word>
+                    <Word>has_child</Word>
+                    <Word>has_parent</Word>
+                    <Word>match_all</Word>
+                    <Word>mlt</Word>
+                    <Word>mlt_field</Word>
+                    <Word>prefix</Word>
+                    <Word>query_string</Word>
+                    <Word>range</Word>
+                    <Word>regexp</Word>
+                    <Word>span_first</Word>
+                    <Word>span_multi</Word>
+                    <Word>span_near</Word>
+                    <Word>span_not</Word>
+                    <Word>span_or</Word>
+                    <Word>span_term</Word>
+                    <Word>term</Word>
+                    <Word>terms</Word>
+                    <Word>common</Word>
+                    <Word>top_children</Word>
+                    <Word>wildcard</Word>
+                    <Word>nested</Word>
+                    <Word>custom_filters_score</Word>
+                    <Word>indices</Word>
+                    <Word>text</Word>
+                    <Word>geo_shape</Word>
+
+                    <Word>filter</Word>
+                    <Word>and</Word>
+                    <Word>bool</Word>
+                    <Word>must</Word>
+                    <Word>should</Word>
+                    <Word>must_not</Word>
+                    <Word>minimum_should_match</Word>
+
+                    <Word>exists</Word>
+                    <Word>ids</Word>
+                    <Word>limit</Word>
+                    <Word>type</Word>
+                    <Word>geo_bbox</Word>
+                    <Word>geo_distance</Word>
+                    <Word>geo_distance_range</Word>
+                    <Word>geo_polygon</Word>
+                    <Word>geo_shape</Word>
+                    <Word>has_child</Word>
+                    <Word>has_parent</Word>
+                    <Word>match_all</Word>
+                    <Word>missing</Word>
+                    <Word>not</Word>
+                    <Word>numeric_range</Word>
+                    <Word>or</Word>
+                    <Word>prefix</Word>
+                    <Word>query</Word>
+                    <Word>range</Word>
+                    <Word>regexp</Word>
+                    <Word>script</Word>
+                    <Word>term</Word>
+                    <Word>terms</Word>
+                    <Word>nested</Word>
+
+                    <Word>score_type</Word>
+                    <Word>operator</Word>
+                    <Word>zero_terms_query</Word>
+                    <Word>cutoff_frequency</Word>
+                    <Word>max_expansions</Word>
+                    <Word>fields</Word>
+                    <Word>use_dis_max</Word>
+                    <Word>tie_breaker</Word>
+                    <Word>nested_path</Word>
+                    <Word>nested_filter</Word>
+                    <Word>mode</Word>
+                    <Word>values</Word>
+                    <Word>script</Word>
+                    <Word>params</Word>
+                    <Word>boost_factor</Word>
+                    <Word>enable_position_increments</Word>
+                    <Word>parent_type</Word>
+                    <Word>_scope</Word>
+                    <Word>default_field</Word>
+                    <Word>default_operator</Word>
+                    <Word>allow_leading_wildcard</Word>
+                    <Word>lowercase_expanded_terms</Word>
+                    <Word>enable_position_increments</Word>
+                    <Word>fuzzy_max_expansions</Word>
+                    <Word>fuzzy_min_sim</Word>
+                    <Word>fuzzy_prefix_length</Word>
+                    <Word>phrase_slop</Word>
+                    <Word>analyze_wildcard</Word>
+                    <Word>auto_generate_phrase_queries</Word>
+                    <Word>minimum_should_match</Word>
+                    <Word>lenient</Word>
+                    <Word>_missing_</Word>
+                    <Word>_exists_</Word>
+                    <Word>rewrite</Word>
+                    <Word>to</Word>
+                    <Word>include_lower</Word>
+                    <Word>include_upper</Word>
+                    <Word>gt</Word>
+                    <Word>gte</Word>
+                    <Word>lt</Word>
+                    <Word>lte</Word>
+                    <Word>value</Word>
+
+
+                    <Word>took</Word>
+                    <Word>timed_out</Word>
+                    <Word>_shards</Word>
+                    <Word>total</Word>
+                    <Word>successful</Word>
+                    <Word>failed</Word>
+                    <Word>hits</Word>
+                    <Word>max_score</Word>
+                    <Word>hits</Word>
+                    <Word>_index</Word>
+                    <Word>_type</Word>
+                    <Word>_id</Word>
+                    <Word>_score</Word>
+                    <Word>_source</Word>
+                    
+                </Keywords>
+
+                <Keywords color="Literal">
+                    <Word>string</Word>
+                    <Word>integer</Word>
+                    <Word>long</Word>
+                    <Word>float</Word>
+                    <Word>double</Word>
+                    <Word>boolean</Word>
+                    <Word>nested</Word>
+                    <Word>ip</Word>
+
+                    <Word>asc</Word>
+                    <Word>desc</Word>
+                    <Word>sum</Word>
+                    <Word>avg</Word>
+                    <Word>min</Word>
+                    <Word>max</Word>
+                    <Word>total</Word>
+
+                    <Word>constant_score_auto</Word>
+                    <Word>constant_score_boolean</Word>
+                    <Word>constant_score_filter</Word>
+                    <Word>scoring_boolean</Word>
+                    <Word>top_terms_</Word>
+                    <Word>top_terms_boost_</Word>
+                    <Word>basicDate</Word>
+                    <Word>basic_date</Word>
+                    <Word>basicDateTime</Word>
+                    <Word>basic_date_time</Word>
+                    <Word>basicDateTimeNoMillis</Word>
+                    <Word>basic_date_time_no_millis</Word>
+                    <Word>basicOrdinalDate</Word>
+                    <Word>basic_ordinal_date</Word>
+                    <Word>basicOrdinalDateTime</Word>
+                    <Word>basic_ordinal_date_time</Word>
+                    <Word>basicOrdinalDateTimeNoMillis</Word>
+                    <Word>basic_ordinal_date_time_no_millis</Word>
+                    <Word>basicTime</Word>
+                    <Word>basic_time</Word>
+                    <Word>basicTimeNoMillis</Word>
+                    <Word>basic_time_no_millis</Word>
+                    <Word>basicTTime</Word>
+                    <Word>basic_t_Time</Word>
+                    <Word>basicTTimeNoMillis</Word>
+                    <Word>basic_t_time_no_millis</Word>
+                    <Word>basicWeekDate</Word>
+                    <Word>basic_week_date</Word>
+                    <Word>basicWeekDateTime</Word>
+                    <Word>basic_week_date_time</Word>
+                    <Word>basicWeekDateTimeNoMillis</Word>
+                    <Word>basic_week_date_time_no_millis</Word>
+                    <Word>date</Word>
+                    <Word>dateHour</Word>
+                    <Word>date_hour</Word>
+                    <Word>dateHourMinute</Word>
+                    <Word>date_hour_minute</Word>
+                    <Word>dateHourMinuteSecond</Word>
+                    <Word>date_hour_minute_second</Word>
+                    <Word>dateHourMinuteSecondFraction</Word>
+                    <Word>date_hour_minute_second_fraction</Word>
+                    <Word>dateHourMinuteSecondMillis</Word>
+                    <Word>date_hour_minute_second_millis</Word>
+                    <Word>dateOptionalTime</Word>
+                    <Word>date_optional_time</Word>
+                    <Word>dateTime</Word>
+                    <Word>date_time</Word>
+                    <Word>dateTimeNoMillis</Word>
+                    <Word>date_time_no_millis</Word>
+                    <Word>hour</Word>
+                    <Word>hourMinute</Word>
+                    <Word>hour_minute</Word>
+                    <Word>hourMinuteSecond</Word>
+                    <Word>hour_minute_second</Word>
+                    <Word>hourMinuteSecondFraction</Word>
+                    <Word>hour_minute_second_fraction</Word>
+                    <Word>hourMinuteSecondMillis</Word>
+                    <Word>hour_minute_second_millis</Word>
+                    <Word>ordinalDate</Word>
+                    <Word>ordinal_date</Word>
+                    <Word>ordinalDateTime</Word>
+                    <Word>ordinal_date_time</Word>
+                    <Word>ordinalDateTimeNoMillis</Word>
+                    <Word>ordinal_date_time_no_millis</Word>
+                    <Word>time</Word>
+                    <Word>tTime</Word>
+                    <Word>t_time</Word>
+                    <Word>tTimeNoMillis</Word>
+                    <Word>t_time_no_millis</Word>
+                    <Word>weekDate</Word>
+                    <Word>week_date</Word>
+                    <Word>weekDateTime</Word>
+                    <Word>week_date_time</Word>
+                    <Word>weekyear</Word>
+                    <Word>week_year</Word>
+                    <Word>weekyearWeek</Word>
+                    <Word>year</Word>
+                    <Word>yearMonth</Word>
+                    <Word>year_month</Word>
+                    <Word>yearMonthDay</Word>
+                    <Word>year_month_day</Word>
+                </Keywords>
+
+            </RuleSet>
+		</Span>
+        
+		<Span color="Comment">
+			<Begin>//</Begin>
+		</Span>
+		<Span color="Comment" multiline="true">
+			<Begin>/\*</Begin>
+			<End>\*/</End>
+		</Span>
+        
+		<Rule color="Digits">\b0[xX][0-9a-fA-F]+|(\b\d+(\.[0-9]+)?|\.[0-9]+)([eE][+-]?[0-9]+)?</Rule>
+	</RuleSet>
+</SyntaxDefinition>
