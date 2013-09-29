@@ -1,4 +1,6 @@
 ﻿using System;
+using System.CodeDom;
+using System.CodeDom.Compiler;
 using System.IO;
 using System.Linq;
 using System.Resources;
@@ -270,7 +272,9 @@ namespace EsAdmin
             }
             catch (Exception ex)
             {
-                output.Text = "Exception : " + ex;
+                var message = ex.Message;
+                message = System.Text.RegularExpressions.Regex.Unescape(message);
+                output.Text = "Error : \r\n" + message;
             }
         }
 
